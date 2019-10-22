@@ -2,10 +2,10 @@ const router = require('express').Router();
 const Users = require('../../database/endPointModel.js');
 
 
-router.get('/familyName', (req, res) => {
-    const familyName = req.body;
-    console.log(familyName);
-    Users.findAllFamily(familyName)
+router.get('/familyNameID', (req, res) => {
+    const familyNameID = req.body;
+    console.log(familyNameID);
+    Users.findAllFamily(familyNameID)
         .then(response => {
             res.status(200).json(response);
         })
