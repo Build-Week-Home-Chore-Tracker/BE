@@ -42,5 +42,15 @@ server.get('/', (req, res) => {
     res.status(200).json({ message: 'you made it to the fan club, Boss!' });
 })
 
+server.get('/api/chores', (req, res) => {
+    Users.findAllChores()
+        .then(response => {
+            res.status(200).json(response);
+        })
+        .catch(error => {
+            res.status(500).json({ error, message: 'can not return chores' });
+        });
+});
+
 
 module.exports = server;

@@ -7,6 +7,7 @@ module.exports = {
     findAllFamily,
     findBy,
     findById,
+    findAllChores,
     findUserChores,
     updateUser,
     removeUser,
@@ -47,9 +48,13 @@ function findById(id) {
         .first();
 };
 
-function findUserChores() {
+function findAllChores() {
+    return db('chores')
+};
 
-}
+function findUserChores(id) {
+
+};
 
 function updateUser(id, changes) {
     return db('users')
