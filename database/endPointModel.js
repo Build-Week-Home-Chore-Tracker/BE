@@ -9,6 +9,7 @@ module.exports = {
     findById,
     findAllChores,
     findUserChores,
+    getpointsT,
     updateUser,
     removeUser,
 
@@ -53,8 +54,24 @@ function findAllChores() {
 };
 
 function findUserChores(id) {
-
+    console.log(id);
+    return db('users as u')
+        .where('u.id', id)
+        .join('choreList as cl', 'u.id', '=', 'cl.userId')
+        .join('chores as c', 'cl.choreId', '=', 'c.choreId')
+        .select('u.name', 'c.choreName', 'cl.completed', 'cl.notes', 'cl.points');
 };
+
+function getpointsT(id) {
+    console.log(id, 'from endPointsModel');
+    return db('users')
+        .where('users.id', '=', id)
+        .join('choreList', 'users.id', '=', 'choreList.userId')
+        .count('choreList.points as totalPoints')
+        .count('choreList.bonusP as bonusPoints')
+
+    ;
+}
 
 function updateUser(id, changes) {
     return db('users')

@@ -8,6 +8,8 @@ const Users = require('../database/endPointModel.js');
 const regLoginRouter = require('../api/regLogin/regLoginRouter.js');
 const userRouter = require('../api/userRouter/userRouter.js');
 const childRouter = require('./userRouter/childRouter.js');
+const choresRouter = require('./userRouter/choresRouter.js');
+
 
 const server = express();
 //makes the config for the session cookie if we use it
@@ -37,20 +39,23 @@ server.use(session(sessionConfig));
 server.use('/api/auth', regLoginRouter);
 server.use('/api/users', userRouter);
 server.use('/api/user', childRouter);
+server.use('/api/chores', choresRouter);
+
+
 //test get
 server.get('/', (req, res) => {
     res.status(200).json({ message: 'you made it to the fan club, Boss!' });
 })
 
-server.get('/api/chores', (req, res) => {
-    Users.findAllChores()
-        .then(response => {
-            res.status(200).json(response);
-        })
-        .catch(error => {
-            res.status(500).json({ error, message: 'can not return chores' });
-        });
-});
+// server.get('/api/chores', (req, res) => {
+//     Users.findAllChores()
+//         .then(response => {
+//             res.status(200).json(response);
+//         })
+//         .catch(error => {
+//             res.status(500).json({ error, message: 'can not return chores' });
+//         });
+// });
 
 
 module.exports = server;

@@ -30,13 +30,18 @@ router.get('/:id', (req, res) => {
     const id = req.params.id;
     Users.findById(id)
         .then(response => {
-            res.status(200).json(response)
+            if (response) {
+                res.status(200).json(response);
+            } else {
+                res.status(404).json({ Message: 'no user by that id' });
+            }
         })
         .catch(error => {
             res.status(500).json({ error, Message: 'unable to pull request from database' });
         });
 });
 
+//update user info
 router.put('/:id', (req, res) => {
     const id = req.params.id;
     const changes = req.body;
