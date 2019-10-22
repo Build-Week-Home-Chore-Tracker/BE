@@ -14,8 +14,6 @@ router.post('/register', (req, res) => {
 
     Users.add(user)
         .then(newUser => {
-            // req.session.userId = newUser.id;
-
             res.status(200).json({ newUser, Name: user.name });
         })
         .catch(error => {

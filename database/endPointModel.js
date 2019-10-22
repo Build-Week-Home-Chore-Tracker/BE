@@ -7,8 +7,9 @@ module.exports = {
     findAllFamily,
     findBy,
     findById,
-    update,
-    remove,
+    findUserChores,
+    updateUser,
+    removeUser,
 
 };
 
@@ -27,9 +28,9 @@ function add(user) {
         });
 };
 
-function findAllFamily(familyName) {
+function findAllFamily(familyNameID) {
     return db('users')
-        .where(familyName);
+        .where(familyNameID);
 }
 
 function findBy(filter) {
@@ -46,10 +47,21 @@ function findById(id) {
         .first();
 };
 
-function update() {
+function findUserChores() {
 
+}
+
+function updateUser(id, changes) {
+    return db('users')
+        .where({ id })
+        .update(changes)
+        .then(() => {
+            return findById(id);
+        })
 };
 
-function remove() {
-
+function removeUser(id) {
+    return db('users')
+        .where({ id })
+        .del();
 }
