@@ -12,6 +12,20 @@ router.get('/', (req, res) => {
             res.status(500).json({ error, message: 'can not return chores' });
         });
 });
+router.get('/chore/:choreId', (req, res) => {
+    const choreId = req.params.choreId;
+    Users.findChoreById(choreId)
+        .then(theChore => {
+            if (theChore) {
+                res.status(200).json(theChore)
+            } else {
+                res.status(404).json({ Message: 'no chore by that id' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error, Message: 'could not find the chore' });
+        });
+});
 
 //get the chores by user id
 router.get('/:id', (req, res) => {
@@ -46,6 +60,27 @@ router.get('/:id/points', (req, res) => {
         .catch(error => {
             res.status(500).json({ error, message: 'could not get points information' });
         });
+});
+
+router.put('/choresList/:id', (req, res) => {
+    const id = req.params.id;
+
+});
+
+router.put('/chore/:choreId', (req, res) => {
+    const choreId = req.params.choreId;
+    const changes = req.body;
+    Users.findAllChores()
+        .then(getChores => {
+            Users.updateChore(choreId, changes)
+                .then(changed => {
+                    res.status(200).json(changed);
+                })
+                .catch(error => {
+                    res.status(500).json({ error, Message: ' couldnt update for some reason or another' });
+                });
+        })
+
 });
 
 

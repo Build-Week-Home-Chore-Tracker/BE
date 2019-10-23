@@ -25,24 +25,18 @@ exports.up = function(knex) {
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
 
-            tbl.integer('points').defaultTo(0);
+            // tbl.integer('points').defaultTo(0);
             tbl.integer('bonusP').defaultTo(0);
             tbl.boolean('completed').defaultTo(false);
-            tbl.date('dateAssigned');
+            tbl.time('dateMade').defaultTo(knex.fn.now());
             tbl.text('notes');
         })
         .createTable('chores', tbl => {
             tbl.increments('choreId');
             tbl.string('choreName', 128).unique().notNullable();
+            tbl.string('choreIcon');
+            tbl.integer('chorePointValue');
         })
-        // .createTable('points', tbl => {
-        //     tbl.increments('pointsId');
-        //     tbl.integer('p1').defaultTo(1);
-        //     tbl.integer('p2').defaultTo(2);
-        //     tbl.integer('p3').defaultTo(3);
-        //     tbl.integer('p4').defaultTo(4);
-        //     tbl.integer('p5').defaultTo(5);
-        // })
 };
 
 exports.down = function(knex) {

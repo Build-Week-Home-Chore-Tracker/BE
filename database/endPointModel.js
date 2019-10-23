@@ -8,13 +8,16 @@ module.exports = {
     findBy,
     findById,
     findAllChores,
+    findChoreById,
     findUserChores,
+    updateAssignedChoreList,
+    updateChore,
     getpointsT,
     updateUser,
     removeUser,
 
 };
-
+//admin function
 function findAllUsers() {
     return db('users');
 }
@@ -48,9 +51,28 @@ function findById(id) {
         .where({ id })
         .first();
 };
-
+//admin function
 function findAllChores() {
     return db('chores')
+};
+
+//find chore by id
+function findChoreById(choreId) {
+    console.log(choreId);
+    return db('chores')
+        .where({ choreId })
+        .first();
+}
+//find then update single chore on table-admin function?
+function updateChore(choreId, changes) {
+    return db('chores')
+        .where({ choreId })
+        .update(changes)
+        .then((choreId) => {
+            return db('chores')
+                .where({ choreId })
+                .first();
+        })
 };
 
 function findUserChores(id) {
@@ -79,6 +101,15 @@ function updateUser(id, changes) {
         .update(changes)
         .then(() => {
             return findById(id);
+        })
+};
+
+function updateAssignedChoreList(id, choreId, changes) {
+    return db('users')
+        .where({ choreId })
+        .update(changes)
+        .then(() => {
+            return findUserChores({ id })
         })
 };
 
