@@ -90,8 +90,8 @@ function getpointsT(id) {
         .where('users.id', '=', id)
         .join('choreList', 'users.id', '=', 'choreList.userId')
         .join('chores', 'choreList.choreId', '=', 'chores.choreId')
-        .count('chores.chorePointValue as totalPoints')
-        .count('choreList.bonusP as bonusPoints')
+        .sum('chores.chorePointValue as totalPoints')
+        .sum('choreList.bonusP as bonusPoints')
 
     ;
 }
