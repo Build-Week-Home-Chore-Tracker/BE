@@ -2,7 +2,9 @@
 const db = require('../database/dbConfig.js');
 
 module.exports = {
-    add,
+    addUser,
+    addChore,
+    addChoreToUser,
     findAllUsers,
     findAllFamily,
     findBy,
@@ -23,7 +25,7 @@ function findAllUsers() {
 }
 
 
-function add(user) {
+function addUser(user) {
     console.log('am i getting here?');
     return db('users')
         .insert(user, 'id')
@@ -31,6 +33,18 @@ function add(user) {
             return findById(id)
                 .select('id', 'username');
         });
+};
+
+function addChore(chore) {
+    return db('chores')
+        .insert(chore, 'choreId')
+        .then(([choreId]) => {
+            return findChoreById(choreId);
+        })
+};
+
+function addChoreToUser() {
+
 };
 
 function findAllFamily(familyNameID) {
@@ -81,7 +95,7 @@ function findUserChores(id) {
         .where('u.id', id)
         .join('choreList as cl', 'u.id', '=', 'cl.userId')
         .join('chores as c', 'cl.choreId', '=', 'c.choreId')
-        .select('u.name', 'c.choreName', 'cl.completed', 'cl.notes', 'cl.points');
+        .select('u.name', 'c.choreName', 'cl.completed', 'cl.notes', 'c.chorePointValue');
 };
 
 function getpointsT(id) {

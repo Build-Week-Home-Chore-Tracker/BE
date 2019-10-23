@@ -12,6 +12,18 @@ router.get('/', (req, res) => {
             res.status(500).json({ error, message: 'can not return chores' });
         });
 });
+
+//post new chore into chores table
+router.post('/', (req, res) => {
+    const newChore = req.body;
+    Users.addChore(newChore)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            res.status(500).json({ error, Message: 'couldnt add new chore to default list' });
+        });
+});
 router.get('/chore/:choreId', (req, res) => {
     const choreId = req.params.choreId;
     Users.findChoreById(choreId)
@@ -34,7 +46,7 @@ router.get('/:id', (req, res) => {
     Users.findUserChores(id)
         .then(response => {
             if (response.length === 0) {
-                res.status(200).json({ Message: 'this user has not chores' });
+                res.status(200).json({ Message: 'this user has no chores' });
             } else {
                 res.status(200).json(response);
             }
@@ -66,11 +78,11 @@ router.put('/choresList/:id', (req, res) => {
     const id = req.params.id;
 
 });
-
+//updates the chore on chores table
 router.put('/chore/:choreId', (req, res) => {
     const choreId = req.params.choreId;
     const changes = req.body;
-    Users.findAllChores()
+    Users.findChoreById(choreId)
         .then(getChores => {
             Users.updateChore(choreId, changes)
                 .then(changed => {
