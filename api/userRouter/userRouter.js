@@ -12,8 +12,8 @@ router.get('/all', (req, res) => {
             res.status(500).json({ error, message: 'woops could not get them' });
         });
 });
-
-router.get(`/familyNameID`, authToken, (req, res) => {
+//going to use authToken here i can help frontend figure out how to implement the auth
+router.get(`/familyNameID`, (req, res) => {
     const familyNameID = req.body;
     console.log(familyNameID);
     Users.findAllFamily(familyNameID)
