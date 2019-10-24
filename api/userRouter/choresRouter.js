@@ -71,7 +71,7 @@ router.delete('/chore/:choreId', (req, res) => {
 
 
 //points total
-router.get('/:id/points', (req, res) => {
+router.get('/user/:id/points', (req, res) => {
     const id = req.params.id;
     Users.getpointsT(id)
         .then(points => {
