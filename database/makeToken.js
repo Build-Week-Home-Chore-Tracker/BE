@@ -9,11 +9,11 @@ module.exports = function generateToken(user) {
         role: user.role,
         //any other data
     };
-    const secrets = 'thisisa freaking secretof secrets!';
+    // const secrets = 'thisisa freaking secretof secrets!';
     const options = {
         expiresIn: '1h',
     };
 
-    return jwt.sign(payload, secrets, options);
+    return jwt.sign(payload, secret.jwtSecret, options);
 
 }

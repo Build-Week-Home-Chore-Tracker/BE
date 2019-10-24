@@ -13,13 +13,13 @@ router.get('/all', (req, res) => {
         });
 });
 
-router.get(`/familyNameID`, (req, res) => {
+router.get(`/familyNameID`, authToken, (req, res) => {
     const familyNameID = req.body;
     console.log(familyNameID);
     Users.findAllFamily(familyNameID)
 
-    .then(response => {
-            res.status(200).json(response);
+    .then(user => {
+            res.status(200).json(user);
         })
         .catch(error => {
             res.status(500).json({ error, Message: 'unable to pull request from database' });

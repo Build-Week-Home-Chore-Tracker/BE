@@ -75,12 +75,7 @@ router.get('/user/:id/points', (req, res) => {
     const id = req.params.id;
     Users.getpointsT(id)
         .then(points => {
-            console.log(points, 'in the .then');
-            // if (!points) {
-            //     res.status(400).json({ points, message: 'could not find any points... try to earn some' });
-            // } else {
             res.status(200).json(points);
-            // }
         })
         .catch(error => {
             res.status(500).json({ error, message: 'could not get points information' });

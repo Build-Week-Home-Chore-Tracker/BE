@@ -1,13 +1,14 @@
 const router = require('express').Router();
-
+const checkToken = require('../../Auth/authToken.js');
 const Users = require('../../database/endPointModel.js');
-
+//its currently not liking the token setup.. may need to switch to sessions... well see
 
 //put in token auth so only logged in child can see their profile on this route
 router.get('/:id', (req, res) => {
     const id = req.params.id;
     Users.findById(id)
         .then(resp => {
+
             res.status(200).json({ id: resp.id, familyNameID: resp.familyNameID, username: resp.username, name: resp.name, role: resp.role })
         })
         .catch(error => {
