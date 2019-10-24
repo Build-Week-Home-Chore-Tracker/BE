@@ -53,21 +53,6 @@ router.delete('/chore/:choreId', (req, res) => {
         });
 });
 
-// //get the chores by user id
-// router.get('/:id', (req, res) => {
-//     const id = req.params.id;
-//     Users.findUserChores(id)
-//         .then(response => {
-//             if (response.length === 0) {
-//                 res.status(200).json({ Message: 'this user has no chores' });
-//             } else {
-//                 res.status(200).json(response);
-//             }
-//         })
-//         .catch(error => {
-//             res.status(500).json({ error, Message: 'could not return user chores' });
-//         });
-// });
 
 
 //points total
@@ -82,10 +67,6 @@ router.get('/user/:id/points', (req, res) => {
         });
 });
 
-router.put('/choresList/:id', (req, res) => {
-    const id = req.params.id;
-
-});
 //updates the chore on chores table
 router.put('/chore/:choreId', (req, res) => {
     const choreId = req.params.choreId;

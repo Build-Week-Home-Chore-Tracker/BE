@@ -2,7 +2,6 @@ const router = require('express').Router();
 const authToken = require('../../Auth/authToken.js');
 const Users = require('../../database/endPointModel.js');
 router.get('/all', (req, res) => {
-    console.log(req);
     Users.getAllAssigned()
         .then(all => {
 

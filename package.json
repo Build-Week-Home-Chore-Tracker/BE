@@ -8,6 +8,9 @@
         "start": "node index.js",
         "test": "cross-env DB_ENV=testing jest --watch"
     },
+    "jest": {
+        "testEnviroment": "node"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Build-Week-Home-Chore-Tracker/BE.git"
