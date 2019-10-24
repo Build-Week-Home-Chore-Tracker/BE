@@ -9,7 +9,7 @@ const regLoginRouter = require('../api/regLogin/regLoginRouter.js');
 const userRouter = require('../api/userRouter/userRouter.js');
 const childRouter = require('./userRouter/childRouter.js');
 const choresRouter = require('./userRouter/choresRouter.js');
-
+const assignRouter = require('./userRouter/assignRouter.js');
 
 const server = express();
 //makes the config for the session cookie if we use it
@@ -40,7 +40,7 @@ server.use('/api/auth', regLoginRouter);
 server.use('/api/users', userRouter);
 server.use('/api/user', childRouter);
 server.use('/api/chores', choresRouter);
-
+server.use('/api/assign', assignRouter);
 
 //test get
 server.get('/', (req, res) => {

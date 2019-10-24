@@ -5,10 +5,10 @@ exports.up = function(knex) {
             tbl.string('username', 128).unique().notNullable();
             tbl.string('name').notNullable();
             tbl.string('password', 128).notNullable();
-            tbl.string('role').defaultTo('child')
+            tbl.string('role').defaultTo('child');
         })
         .createTable('choreList', tbl => {
-            tbl.increments('chorelistId');
+            tbl.increments('choreListId');
             tbl.integer('userId')
                 .notNullable()
                 .unsigned()

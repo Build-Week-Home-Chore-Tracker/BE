@@ -11,12 +11,16 @@ module.exports = {
     findById,
     findAllChores,
     findChoreById,
+    getAllAssigned,
     findUserChores,
-    updateAssignedChoreList,
+    updateAssignedChore,
     updateChore,
     getpointsT,
     updateUser,
     removeUser,
+    removeChore,
+    deleteChoreFromUser,
+    findUserChoreById
 
 };
 //admin function
@@ -26,7 +30,6 @@ function findAllUsers() {
 
 
 function addUser(user) {
-    console.log('am i getting here?');
     return db('users')
         .insert(user, 'id')
         .then(([id]) => {
@@ -43,9 +46,29 @@ function addChore(chore) {
         })
 };
 
-function addChoreToUser() {
-
+function findUserChoreById(choreListId) {
+    console.log(choreListId);
+    return db('choreList')
+        .where({ choreListId })
+        .first();
 };
+
+function getAllAssigned() {
+    return db('choreList');
+};
+
+function addChoreToUser(newChore) {
+    console.log(newChore)
+    return db('choreList')
+        .insert({ userId: newChore.userId, choreId: newChore.newer.choreId, notes: newChore.newer.notes }, 'choreListId');
+};
+
+function deleteChoreFromUser(choreListId) {
+    console.log(choreListId);
+    return db('choreList')
+        .where({ choreListId })
+        .del();
+}
 
 function findAllFamily(familyNameID) {
     return db('users')
@@ -53,7 +76,7 @@ function findAllFamily(familyNameID) {
 }
 
 function findBy(filter) {
-    // console.log(filter, 'from auth-model');
+    console.log(filter, 'from auth-model');
     return db('users')
         .where(filter)
         .first();
@@ -72,7 +95,6 @@ function findAllChores() {
 
 //find chore by id
 function findChoreById(choreId) {
-    console.log(choreId);
     return db('chores')
         .where({ choreId })
         .first();
@@ -82,15 +104,12 @@ function updateChore(choreId, changes) {
     return db('chores')
         .where({ choreId })
         .update(changes)
-        .then((choreId) => {
-            return db('chores')
-                .where({ choreId })
-                .first();
+        .then(() => {
+            return findChoreById(choreId);
         })
 };
 
 function findUserChores(id) {
-    console.log(id);
     return db('users as u')
         .where('u.id', id)
         .join('choreList as cl', 'u.id', '=', 'cl.userId')
@@ -99,7 +118,6 @@ function findUserChores(id) {
 };
 
 function getpointsT(id) {
-    console.log(id, 'from endPointsModel');
     return db('users')
         .where('users.id', '=', id)
         .join('choreList', 'users.id', '=', 'choreList.userId')
@@ -119,13 +137,10 @@ function updateUser(id, changes) {
         })
 };
 
-function updateAssignedChoreList(id, choreId, changes) {
-    return db('users')
-        .where({ choreId })
-        .update(changes)
-        .then(() => {
-            return findUserChores({ id })
-        })
+function updateAssignedChore(choreListId, changes) {
+    return db('choreList')
+        .where({ choreListId })
+        .update(changes);
 };
 
 function removeUser(id) {
@@ -133,3 +148,9 @@ function removeUser(id) {
         .where({ id })
         .del();
 }
+
+function removeChore(choreId) {
+    return db('chores')
+        .where({ choreId })
+        .del();
+};

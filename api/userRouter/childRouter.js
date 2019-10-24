@@ -22,7 +22,6 @@ router.put('/:id', (req, res) => {
     Users.findById(id)
         .then(user => {
             if (user) {
-                console.log(user);
                 Users.updateUser(id, changes)
                     .then(updated => {
                         res.status(201).json(updated);

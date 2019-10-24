@@ -38,23 +38,36 @@ router.get('/chore/:choreId', (req, res) => {
             res.status(500).json({ error, Message: 'could not find the chore' });
         });
 });
-
-//get the chores by user id
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    console.log(id);
-    Users.findUserChores(id)
-        .then(response => {
-            if (response.length === 0) {
-                res.status(200).json({ Message: 'this user has no chores' });
+router.delete('/chore/:choreId', (req, res) => {
+    const choreId = req.params.choreId;
+    Users.removeChore(choreId)
+        .then(removed => {
+            if (removed) {
+                res.status(200).json({ removed, Message: 'chore deleted from list but not from life...:)' });
             } else {
-                res.status(200).json(response);
+                res.status(404).json({ message: 'dont think that chore exists here yet' });
             }
         })
         .catch(error => {
-            res.status(500).json({ error, Message: 'could not return user chores' });
+            res.status(500).json({ error, Message: 'could not delete the chore' });
         });
 });
+
+// //get the chores by user id
+// router.get('/:id', (req, res) => {
+//     const id = req.params.id;
+//     Users.findUserChores(id)
+//         .then(response => {
+//             if (response.length === 0) {
+//                 res.status(200).json({ Message: 'this user has no chores' });
+//             } else {
+//                 res.status(200).json(response);
+//             }
+//         })
+//         .catch(error => {
+//             res.status(500).json({ error, Message: 'could not return user chores' });
+//         });
+// });
 
 
 //points total
