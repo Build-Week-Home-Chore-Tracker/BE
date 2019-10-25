@@ -60,6 +60,7 @@ router.get('/user/:id/points', (req, res) => {
     const id = req.params.id;
     Users.getpointsT(id)
         .then(points => {
+            console.log(points);
             res.status(200).json(points);
         })
         .catch(error => {

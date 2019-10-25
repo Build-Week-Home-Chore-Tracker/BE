@@ -120,6 +120,7 @@ function findUserChores(id) {
 function getpointsT(id) {
     return db('users')
         .where('users.id', '=', id)
+        .where('choreList.completed', '=', 1)
         .join('choreList', 'users.id', '=', 'choreList.userId')
         .join('chores', 'choreList.choreId', '=', 'chores.choreId')
         .sum('chores.chorePointValue as totalPoints')
@@ -127,6 +128,7 @@ function getpointsT(id) {
 
     ;
 }
+
 
 function updateUser(id, changes) {
     return db('users')
